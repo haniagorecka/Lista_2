@@ -18,12 +18,10 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
         }
         this.identifier = str
     }
-    override fun toString(): String
-    {
-        check(this.data.isNotBlank()){"Nić jest pusta"}
-        var str: String
-        str=">"+this.identifier+"\n"+this.data
-        return str
+
+    override fun toString(): String {
+        check(this.data.isNotBlank()) { "Nić jest pusta" }
+        return ">" + identifier + "\n" + data
     }
 
     fun mutate(position: Int, value: Char)
@@ -113,9 +111,7 @@ class RNASequence (var data: String)
     override fun toString(): String
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
-        var str: String
-        str=">"+this.identifier+"\n"+this.data
-        return str
+        return ">"+this.identifier+"\n"+this.data
     }
     fun mutate(position: Int, value: Char)
     {
