@@ -214,15 +214,47 @@ class ProteinSequence(var data: MutableList<String>)
        this.data[position]=value
     }
 
-    fun findMotif(motif: List<String>): Int
+    fun findMotif(motif: MutableList<String>): Int
     {
-        check(this.data.isNotEmpty()){"Nić jest pusta"}
+       check(this.data.isNotEmpty()){"Nić jest pusta"}
        check(this.data.containsAll(motif)) {"Nie ma takiego motywu"}
 
+        var positions = mutableListOf<Int>()
+        for (j in this.data.indices) {
+            if (this.data[j] == motif[0]) {
+               positions.add(j)
+            }
+        }
 
+        var index: Int = -1
+        for (j in positions)
+        {
+            for(i in j..<j+motif.size)
+            {
+                if(this.data[i]!=motif[i-j])
+                {
+                    break
+                }
+                else
+                {
+                    index = i
+                }
+            }
 
-
-
+            if(index == j+motif.size-1)
+            {
+                break
+            }
+            else
+            {
+                index = -1
+            }
+        }
+        if (index == -1)
+        {
+            throw Exception  ("Nie znaleziono pozycji motywu")
+        }
+    return index
     }
 
     override fun toString(): String {
@@ -237,21 +269,18 @@ class ProteinSequence(var data: MutableList<String>)
         var str: String
         str=">"+this.identifier+"\n"
 
-
         for(el in this.data)
         {
 
-        if(mapaAminokwasow.contains(el)
-        {s
-            else{
-                aminokwasy+=mapaAminokwasow.getValue(temp.toString())
-                i+=3
-            }
-        }
-        else throw IllegalArgumentException("Niewłaściwy kodon w nici RNA")
-    }
-        return str
+        if(mapaAminokwasow.contains(el))
+        {
+                str+=mapaAminokwasow.getValue(el)
 
+        }
+
+        else throw IllegalArgumentException("Niewłaściwy kodon w nici RNA")
+        }
+        return str
     }
 }
 
