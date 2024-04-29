@@ -204,11 +204,20 @@ fun main()
     var wiel = Wielomian(list)
     val wiel2 = Wielomian(list2)
     var wiel3 = wiel+wiel2
+    println("Dwa wielomiany: ")
+    print("W1:")
     wiel.Wypisz()
+    print("W2:")
+    wiel2.Wypisz()
+    println("Suma wielomianów: ")
+    wiel3.Wypisz()
+    println("Różnica wielomianów (W1 - W2): ")
     wiel3 = wiel-wiel2
     wiel3.Wypisz()
+    println("Różnica wielomianów (W2 - W1): ")
     wiel3 = wiel2-wiel
     wiel3.Wypisz()
+    println("Iloczyn wielomianów: ")
     wiel3 = wiel*wiel2
     wiel3.Wypisz()
 

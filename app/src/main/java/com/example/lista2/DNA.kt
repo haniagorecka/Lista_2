@@ -416,5 +416,10 @@ class ProteinSequence(var data: MutableList<String>)
  */
 fun main()
 {
-
+var DNA1 = DNASequence("agggtaaattga")
+    println("Sekwencja DNA: $DNA1")
+    println("Sekwencja nici komplementarnej DNA: ${DNA1.complement()}")
+    DNA1.mutate(3, 'a')
+    println("Sekwencja DNA po mutacji na 3 pozycji: $DNA1")
+    println("Indeks, na którym znajduje się motyw aaa: ${DNA1.findMotif("AAA")}")
 }
