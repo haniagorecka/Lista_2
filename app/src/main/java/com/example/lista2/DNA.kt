@@ -10,7 +10,7 @@ package com.example.lista2
 */
 class DNASequence (var data: String)
 {
-val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
+    val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     var identifier: String
     var length: Int
     init {
@@ -18,11 +18,11 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
         var str = "DNASequence"
         if(this.data.length>=6)
         {
-            str+=this.data.uppercase().subSequence(0, 6)
+            str+=this.data.lowercase().subSequence(0, 6)
         }
         else
         {
-            str+=this.data.uppercase()
+            str+=this.data.lowercase()
         }
         this.identifier = str
         this.data = this.data.uppercase()
@@ -33,7 +33,7 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     }
 
     /**
-     * Funkcja zwraca String zawierający opis sekwencji DNA w formacie LASTA
+     * Funkcja zwraca String zawierający opis sekwencji DNA w formacie FASTA
      * jako
      * >identyfier
      * data
@@ -65,12 +65,12 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     }
 
     /**
-     * Funkcja zwraca String, będący sekwencją komplementarną do sekwencji DNA w data
+     * Funkcja zwraca obiekt DNASequence, gdzie data to sekwencja komplementarna do sekwencji DNA w data
      * Najpierw sprawdza czy nić nie jest pusta
-     * @return sekwencja nici komplementarnej DNA
+     * @return obiekt DNASequence nici komplementarnej DNA
      *
      */
-    fun complement(): String
+    fun complement(): DNASequence
     {
         check(this.data.isNotBlank()){"Nić kodująca jest pusta"}
         var complementary= ""
@@ -82,11 +82,11 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
                 'T' -> 'A'
                 'G' -> 'C'
                 else -> throw IllegalArgumentException(" Niewłaściwy symbol w nici kodującej")
-
             }
 
         }
-        return complementary.reversed()
+        val DNAComp = DNASequence(complementary.reversed())
+        return DNAComp
     }
 
     /**
@@ -111,7 +111,7 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
             }
 
         }
-        var RNA = RNASequence(transcibed.reversed())
+        var RNA = RNASequence(transcibed)
         return RNA
     }
 
@@ -126,7 +126,7 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     fun findMotif(motif: String): Int
     {
        check(this.data.isNotBlank()){"Nić jest pusta"}
-       val i = this.data.indexOf(motif)
+       val i = this.data.indexOf(motif.uppercase())
         if (i==-1)
         {
             throw Exception("Brak motywu w nici")
@@ -155,9 +155,9 @@ class RNASequence (var data: String)
     init {
         this.length=this.data.length
         var str = "RNASequence"
-        if(this.data.length>=3)
+        if(this.data.length>=6)
         {
-            str+=this.data.uppercase().subSequence(0, 3)
+            str+=this.data.lowercase().subSequence(0, 6)
         }
         else
         {
@@ -231,7 +231,7 @@ class RNASequence (var data: String)
      * @return obiekt klasy ProteinSequence, gdzie data to wynik translacji RNA
      *
      */
-    fun transluj (): ProteinSequence
+    fun translate (): ProteinSequence
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
 
@@ -272,7 +272,7 @@ class RNASequence (var data: String)
             else throw IllegalArgumentException("Niewłaściwy kodon w nici RNA")
         }
 
-        var Prot = ProteinSequence(aminokwasy)
+        val Prot = ProteinSequence(aminokwasy)
         return Prot
     }
 }
@@ -343,7 +343,6 @@ class ProteinSequence(var data: MutableList<String>)
                positions.add(j)
             }
         }
-
         var index: Int = -1
         for (j in positions)
         {
