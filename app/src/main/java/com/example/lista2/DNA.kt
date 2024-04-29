@@ -1,5 +1,13 @@
 package com.example.lista2
 
+/**
+ * Klasa zawierająca sekwencję DNA oraz dotyczące jej funkcje
+ * @param data sekwencja zasad DNA
+ * @property VALID_CHARS Lista doswolonych znaków (zasad)
+ * @property identifier String identyfikujący sekwencję DNA, jest tworzony w init jako "DNASequence" oraz 6 pierwszych zasad
+ * @property length Długość sekwencji zasad
+ * @author Hanna Górecka
+*/
 class DNASequence (var data: String)
 {
 val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
@@ -7,26 +15,46 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     var length: Int
     init {
         this.length=this.data.length
-        var str = "RNASequence"
-        if(this.data.length>=3)
+        var str = "DNASequence"
+        if(this.data.length>=6)
         {
-            str+=this.data.uppercase().subSequence(0, 3)
+            str+=this.data.uppercase().subSequence(0, 6)
         }
         else
         {
             str+=this.data.uppercase()
         }
         this.identifier = str
+        this.data = this.data.uppercase()
+        for(el in this.data)
+        {
+            check(VALID_CHARS.contains(el)){"Zly element w nici"}
+        }
     }
 
+    /**
+     * Funkcja zwraca String zawierający opis sekwencji DNA w formacie LASTA
+     * jako
+     * >identyfier
+     * data
+     * @return String opisujący sekwencję DNA
+     *
+     */
     override fun toString(): String {
         check(this.data.isNotBlank()) { "Nić jest pusta" }
         return ">" + identifier + "\n" + data
     }
 
+    /**
+     * Funkcja zmienia element o podanym indeksie na podany nowy element
+     * Sprawdza czy nić nie jest pusta, czy istnieje pozycja o danym indeksie i czy podana wartość jest dozwolona
+     * @param position indeks, na którym ma być zmieniona zasada
+     * @param value element, na który ma być zmieniony element na indeksie o pozycji position
+     *
+     */
     fun mutate(position: Int, value: Char)
     {
-        check(this.data.isNotBlank()){"Nić jest pusta"}
+        check(this.data.isNotBlank()) {"Nić jest pusta"}
         check(this.length>position){"Nie istnieje taka pozycja"}
         check(VALID_CHARS.contains(value.uppercaseChar())){"Niedozwolona wartosc"}
 
@@ -35,6 +63,13 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
         this.data=str.toString()
 
     }
+
+    /**
+     * Funkcja zwraca String, będący sekwencją komplementarną do sekwencji DNA w data
+     * Najpierw sprawdza czy nić nie jest pusta
+     * @return sekwencja nici komplementarnej DNA
+     *
+     */
     fun complement(): String
     {
         check(this.data.isNotBlank()){"Nić kodująca jest pusta"}
@@ -54,6 +89,12 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
         return complementary.reversed()
     }
 
+    /**
+     * Funkcja zwraca obiekt klasy RNASequence, będący wynikiem transkrypcji DNA
+     * Najpierw sprawdza czy nić nie jest pusta
+     * @return obiekt klasy RNASequence, gdzie data to wynik transkrybcji DNA
+     *
+     */
     fun transcribe (): RNASequence
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
@@ -74,6 +115,14 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
         return RNA
     }
 
+    /**
+     * Funckja zwraca indeks, na którym znajduje się podany jako argument motyw (sekwencja)
+     * Jeśli takiego motywu nie ma, wyrzucony jest błąd
+     * @param motif sekwencja zasad, która ma się znajdować w sekwencji DNA
+     * @throws Exception kiedy nie ma takiego motywu w nici
+     * @return indeks, na którym znajduje się motyw
+     *
+     */
     fun findMotif(motif: String): Int
     {
        check(this.data.isNotBlank()){"Nić jest pusta"}
@@ -89,6 +138,14 @@ val VALID_CHARS: List<Char> = listOf('A', 'C', 'T', 'G')
     }
 }
 
+/**
+ * Klasa zawierająca sekwencję RNA oraz dotyczące jej funkcje
+ * @param data sekwencja zasad RNA
+ * @property VALID_CHARS Lista dozwolonych znaków (zasad)
+ * @property identifier String identyfikujący sekwencję RNA, jest tworzony w init jako "RNASequence" oraz 6 pierwszych zasad
+ * @property length Długość sekwencji zasad
+ * @author Hanna Górecka
+ */
 class RNASequence (var data: String)
 {
     val VALID_CHARS: List<Char> = listOf('A', 'C', 'U', 'G')
@@ -107,12 +164,34 @@ class RNASequence (var data: String)
             str+=this.data.uppercase()
         }
         this.identifier = str
+        this.data = this.data.uppercase()
+        for(el in this.data)
+        {
+            check(VALID_CHARS.contains(el)){"Zly element w nici"}
+        }
     }
+
+    /**
+     * Funkcja zwraca String zawierający opis sekwencji RNA w formacie LASTA
+     * jako
+     * >identyfier
+     * data
+     *@return String opisujący sekwencję RNA
+     *
+     */
     override fun toString(): String
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
         return ">"+this.identifier+"\n"+this.data
     }
+
+    /**
+     * Funkcja zmienia element o podanym indeksie na podany nowy element
+     * Sprawdza czy nić nie jest pusta, czy istnieje pozycja o danym indeksie i czy podana wartość jest dozwolona
+     * @param position indeks, na którym ma być zmieniona zasada
+     * @param value element, na który ma być zmieniony element na indeksie o pozycji position
+     *
+     */
     fun mutate(position: Int, value: Char)
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
@@ -124,6 +203,14 @@ class RNASequence (var data: String)
         this.data=str.toString()
     }
 
+    /**
+     * Funckja zwraca indeks, na którym znajduje się podany jako argument motyw (sekwencja)
+     * Jeśli takiego motywu nie ma, wyrzucony jest błąd
+     * @param motif sekwencja zasad, która ma się znajdować w sekwencji RNA
+     * @throws Exception kiedy nie ma takiego motywu w nici
+     * @return indeks, na którym znajduje się motyw
+     *
+     */
     fun findMotif(motif: String): Int
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
@@ -138,6 +225,12 @@ class RNASequence (var data: String)
         }
     }
 
+    /**
+     * Funkcja zwraca obiekt klasy ProteinSequence, będący wynikiem translacji RNA
+     * Najpierw sprawdza czy nić nie jest pusta
+     * @return obiekt klasy ProteinSequence, gdzie data to wynik translacji RNA
+     *
+     */
     fun transluj (): ProteinSequence
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
@@ -184,6 +277,15 @@ class RNASequence (var data: String)
     }
 }
 
+/**
+ * Klasa zawierająca sekwencję aminokwasów oraz dotyczące jej funkcje
+ * @param data sekwencja aminokwasów
+ * @property VALID_CHARS Lista doswolonych elementów (aminokwasów)
+ * @property identifier String identyfikujący sekwencję aminokwasów,
+ * jest tworzony w init jako "ProteinSequence" oraz pierwsze litery aminokwasów
+ * @property length Długość sekwencji aminokwasów
+ * @author Hanna Górecka
+ */
 class ProteinSequence(var data: MutableList<String>)
 {
     val VALID_CHARS: List<String> = listOf("Phe", "Leu", "Ile", "Met",
@@ -199,8 +301,19 @@ class ProteinSequence(var data: MutableList<String>)
             str+=it.subSequence(0,1)
         }
         this.identifier = str
+        for(el in this.data)
+        {
+            check(VALID_CHARS.contains(el)){"Zly element ciagu aminokwasow"}
+        }
     }
 
+    /**
+     * Funkcja zmienia element o podanym indeksie na podany nowy element
+     * Sprawdza czy nić nie jest pusta, czy istnieje pozycja o danym indeksie i czy podana wartość jest dozwolona
+     * @param position indeks, na którym ma być zmieniona zasada
+     * @param value element, na który ma być zmieniony element na indeksie o pozycji position
+     *
+     */
     fun mutate(position: Int, value: String)
     {
         check(this.data.isNotEmpty()){"Nić jest pusta"}
@@ -210,6 +323,15 @@ class ProteinSequence(var data: MutableList<String>)
        this.data[position]=value
     }
 
+    /**
+     * Funckja zwraca indeks, na którym znajduje się pierwszy element
+     * podanego jako argument motywu (sekwencji)
+     * Jeśli takiego motywu nie ma, wyrzucony jest błąd
+     * @param motif lista aminokwasów, która ma się znajdować w sekwencji aminokwasów
+     * @throws Exception kiedy nie ma takiego motywu w sekwencji
+     * @return indeks, na którym znajduje się pierwszy element motywu
+     *
+     */
     fun findMotif(motif: MutableList<String>): Int
     {
        check(this.data.isNotEmpty()){"Nić jest pusta"}
@@ -253,6 +375,14 @@ class ProteinSequence(var data: MutableList<String>)
     return index
     }
 
+    /**
+     * Funkcja zwraca String zawierający opis sekwencji aminokwasów w formacie LASTA
+     * jako
+     * >identyfier
+     * Znaki odpowiadające aminokwasom w sekwencji
+     * @return String opisujący sekwencję aminokwasów
+     *
+     */
     override fun toString(): String {
 
         val mapaAminokwasow= mapOf<String, Char>(
@@ -280,6 +410,10 @@ class ProteinSequence(var data: MutableList<String>)
     }
 }
 
+/**
+ * Funkcja main() zawierająca kod, testujący funkcjonalność napisanych klas
+ * @author Hanna Górecka
+ */
 fun main()
 {
 
