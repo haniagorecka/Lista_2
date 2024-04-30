@@ -101,5 +101,18 @@ class WielomianTest {
 
     @Test
     fun times() {
+         val list = mutableListOf<Double>(1.0,1.0,1.0,1.0)
+         val wiel = Wielomian(list)
+         val list1 = mutableListOf<Double>(-3.2, -0.8, -1.0)
+         val wiel1 = Wielomian(list1)
+        var wiel3 = wiel*wiel1
+        var list2 = mutableListOf<Double>(-3.2, -4.0, -5.0, -5.0, -1.8, -1.0)
+        assertTrue(wiel3.wsp == list2, {"Błąd w mnożeniu"})
+        wiel3 = wiel1*wiel
+        assertTrue(wiel3.wsp == list2, {"Błąd w mnożeniu"})
+        val list3 = mutableListOf<Double>(0.0)
+        val wiel4 = Wielomian(list3)*wiel
+        list2 = mutableListOf(0.0, 0.0, 0.0, 0.0)
+         assertTrue(wiel4.wsp == list2, {"Błąd w mnożeniu"}) 
     }
 }

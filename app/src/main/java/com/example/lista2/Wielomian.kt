@@ -283,8 +283,7 @@ fun main()
     var wiel4 = Wielomian(list3)
     println("Wielomian zerowego stopnia: ")
     println(wiel4.ToString())
-    val list1 = mutableListOf<Double>(1.0,0.0,-2.0,0.0)
-    val wiel1 = Wielomian(list1)
-    println(wiel1.ToString())
+
+
 
 }
