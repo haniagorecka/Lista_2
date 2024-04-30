@@ -43,17 +43,13 @@ class DNASequenceTest {
     }
 
     @Test
-    fun mutateRight() {
+    fun mutate() {
         val DNA = DNASequence("aatgttg")
         DNA.mutate(2,'G')
         val str: String = DNA.data
         assertTrue("AAGGTTG"==str, {"Błąd w mutacji"})
     }
 
-    fun mutateWrong() {
-        val DNA = DNASequence("aatgttg")
-        //assertThrows(Exception::class.java){DNA.mutate(8,'G')}
-    }
 
     @Test
     fun complement() {

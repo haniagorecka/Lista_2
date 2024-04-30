@@ -161,7 +161,7 @@ class RNASequence (var data: String)
         }
         else
         {
-            str+=this.data.uppercase()
+            str+=this.data.lowercase()
         }
         this.identifier = str
         this.data = this.data.uppercase()
@@ -172,7 +172,7 @@ class RNASequence (var data: String)
     }
 
     /**
-     * Funkcja zwraca String zawierający opis sekwencji RNA w formacie LASTA
+     * Funkcja zwraca String zawierający opis sekwencji RNA w formacie FASTA
      * jako
      * >identyfier
      * data
@@ -214,7 +214,7 @@ class RNASequence (var data: String)
     fun findMotif(motif: String): Int
     {
         check(this.data.isNotBlank()){"Nić jest pusta"}
-        val i = this.data.indexOf(motif)
+        val i = this.data.indexOf(motif.uppercase())
         if (i==-1)
         {
             throw Exception("Brak motywu w nici")
@@ -371,11 +371,11 @@ class ProteinSequence(var data: MutableList<String>)
         {
             throw Exception  ("Nie znaleziono pozycji motywu")
         }
-    return index
+    return index-1
     }
 
     /**
-     * Funkcja zwraca String zawierający opis sekwencji aminokwasów w formacie LASTA
+     * Funkcja zwraca String zawierający opis sekwencji aminokwasów w formacie FASTA
      * jako
      * >identyfier
      * Znaki odpowiadające aminokwasom w sekwencji
@@ -416,9 +416,29 @@ class ProteinSequence(var data: MutableList<String>)
 fun main()
 {
 var DNA1 = DNASequence("agggtaaattga")
-    println("Sekwencja DNA: $DNA1")
-    println("Sekwencja nici komplementarnej DNA: ${DNA1.complement()}")
+    println("Sekwencja DNA: \n$DNA1")
+    println("Sekwencja nici komplementarnej DNA: \n${DNA1.complement()}")
     DNA1.mutate(3, 'a')
-    println("Sekwencja DNA po mutacji na 3 pozycji: $DNA1")
-    println("Indeks, na którym znajduje się motyw aaa: ${DNA1.findMotif("AAA")}")
+    println("Sekwencja DNA po mutacji na 3 indeksie: \n$DNA1")
+    println("Indeks, na którym zaczyna się motyw aaa: ${DNA1.findMotif("AAA")}")
+    var RNA1 = DNA1.transcribe()
+    println("Nić RNA powstała w wyniku transkrybcji nici DNA: \n${RNA1}")
+    RNA1.mutate(7, 'a')
+    println("Sekwencja DNA po mutacji na 7 indeksie: \n$RNA1")
+    println("Indeks, na którym zaczyna się motyw aauu: ${RNA1.findMotif("UCC")}")
+    var Prot1 = RNA1.translate()
+    println("Sekwencja aminokwasów powstała w wyniku translacji nici RNA: \n${Prot1}")
+    println(Prot1.data)
+    Prot1.mutate(1, "Ser")
+   println("Sekwencja aminokwasów po mutacji na 1 indeksie: \n$Prot1")
+    val list = mutableListOf<String>("Leu", "Lys", "Pro")
+
+    var Prot2 = ProteinSequence(mutableListOf("Ser", "Leu", "Lys", "Pro", "Pro", "Ala"))
+    println("Nowa sekwencja aminokwasów: \n${Prot2}")
+    println("Właściwość data tej sekwencji: ${Prot2.data}")
+    println("Indeks, na którym zaczyna się motyw Leu, Lys, Pro: ${Prot2.findMotif(list)}")
+    var RNA = RNASequence("gggaugaa")
+    var protein = RNA.translate()
+    println(protein)
+    println(protein.data)
 }
