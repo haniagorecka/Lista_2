@@ -33,7 +33,7 @@ class Wielomian (val wsp: MutableList<Double>) {
     }
 
     /**
-     * Fukcja wypisuje wielomian w formacie ax^n+bx^(n-1)+...+cx+d
+     * Fukcja zwraca String, z wielomianem w formacie ax^n+bx^(n-1)+...+cx+d
      */
    fun ToString(): String {
         var i: Int = wsp.size - 1
