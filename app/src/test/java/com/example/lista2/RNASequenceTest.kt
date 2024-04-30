@@ -1,12 +1,12 @@
 package com.example.lista2
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
+import org.junit.Test
 import org.junit.Assert.*
 
 class RNASequenceTest {
 
-    @org.junit.Test
+    @Test
     fun RNASequenceLesserThanSix(){
         val str = "augga"
         val RNA = RNASequence(str)
@@ -18,7 +18,7 @@ class RNASequenceTest {
         assertTrue("RNASequenceaugga"==id, {"Błędna wartość identifier"})
 
     }
-    @org.junit.Test
+    @Test
     fun RNASequenceBiggerThanSix(){
         val str = "auggaaaa"
         val RNA = RNASequence(str)
@@ -30,7 +30,7 @@ class RNASequenceTest {
         assertTrue("RNASequenceauggaa"==id, {"Błędna wartość identifier"})
     }
 
-    @org.junit.Test
+    @Test
     fun testToString() {
         val str = "augga"
         val RNA = RNASequence(str)
@@ -38,7 +38,7 @@ class RNASequenceTest {
         assertTrue(">${RNA.identifier}\n${RNA.data}"==str2, {"Błąd funkcji toString()"})
     }
 
-    @org.junit.Test
+    @Test
     fun mutate() {
         val RNA = RNASequence("aauguug")
         RNA.mutate(2,'G')
@@ -46,14 +46,14 @@ class RNASequenceTest {
         assertTrue("AAGGUUG"==str, {"Błąd w mutacji"})
     }
 
-    @org.junit.Test
+    @Test
     fun findMotif() {
         val RNA = RNASequence("auggau")
         assertEquals(1, RNA.findMotif("UGG"), {"Błąd w szukaniu motywu"})
         assertEquals(0, RNA.findMotif("au"), {"Błąd w szukaniu motywu"})
     }
 
-    @org.junit.Test
+    @Test
     fun translate() {
         var RNA = RNASequence("uuuagcugguaugaa")
         var list = mutableListOf<String>("Phe", "Ser", "Trp", "Tyr", "Glu")

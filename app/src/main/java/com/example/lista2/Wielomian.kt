@@ -35,19 +35,75 @@ class Wielomian (val wsp: MutableList<Double>) {
     /**
      * Fukcja wypisuje wielomian w formacie ax^n+bx^(n-1)+...+cx+d
      */
-    fun Wypisz() {
+   fun ToString(): String {
         var i: Int = wsp.size - 1
-        while (i > 0) {
-            if (i == 1 && wsp[i] != 0.0 && wsp[0] != 0.0) {
-                print(wsp[i].toString() +" x + " + wsp[0].toString())
-            } else if (i == 1 && wsp[i] != 0.0 && wsp[0] == 0.0) {
-                print(wsp[1].toString() + " x")
-            } else if (wsp[i] != 0.0) {
-                print(wsp[i].toString() + "x^$i + ")
+        var str: String=""
+        while (i >=0) {
+            if(str.length==0&&i>1&&wsp[i]!=0.0)
+            {
+                str+=(wsp[i].toString() + "*x^$i")
+            }
+            else if(str.length==0&&i==1&&wsp[i]!=0.0)
+            {
+                str+=(wsp[i].toString() + "*x")
+                if(wsp[0]>0.0)
+                {
+                    str+="+"+wsp[0].toString()
+                }
+                if(wsp[0]<0.0)
+                {
+                    str+=wsp[0].toString()
+                }
+            }
+            else if(str.length==0&&i==0)
+            {
+                if(wsp[0]==0.0)
+                {
+                    str+="0"
+                }
+                else
+                {
+                    str+=wsp[0].toString()
+                }
+            }
+            else if(str.length==0&&i==0)
+            {
+                str+=(wsp[i].toString())
+            }
+            else if (i == 1 && wsp[i] > 0.0 && wsp[0] > 0.0) {
+               str+="+"+wsp[i].toString() + "*x+" + wsp[0].toString()
+            } else if (i == 1 && wsp[i] > 0.0 && wsp[0] == 0.0) {
+                str+=("+"+wsp[1].toString() + "*x")
+            }
+            else if (i == 1 && wsp[i] < 0.0 && wsp[0] == 0.0) {
+                str+=(wsp[1].toString() + "*x")
+            }
+            else if (i == 1 && wsp[i] > 0.0 && wsp[0] == 0.0) {
+                str+=("+"+wsp[1].toString() + "*x")
+            }
+            else if (i == 1 && wsp[i] < 0.0 && wsp[0] == 0.0) {
+                str+=(wsp[1].toString() + "*x")
+            }
+            else if (i == 0&&wsp[0]!=0.0) {
+                if(wsp[0]>0)
+                {
+                    str+="+"+wsp[0].toString()
+                }
+                else
+                {
+                    str+=wsp[0].toString()
+                }
+            }
+            else if (wsp[i] > 0.0) {
+                str+=("+"+wsp[i].toString() + "*x^$i")
+            }
+            else if (wsp[i] < 0.0) {
+                str+=(wsp[i].toString() + "*x^$i")
             }
             i--
         }
-        println()
+
+        return str
     }
 
     /**
@@ -87,17 +143,17 @@ class Wielomian (val wsp: MutableList<Double>) {
         {
             list.add(i, this.wsp[i]+wiel2.wsp[i])
         }
-        if(n<this.wsp.size)
+        if(n<=this.wsp.size-1)
         {
             var i: Int = n
             do
             {
                 list.add(i, this.wsp[i])
                 i++
-            }while(i<=this.wsp.size)
+            }while(i<=this.wsp.size-1)
 
         }
-        else if(n<wiel2.wsp.size)
+        else if(n<=wiel2.wsp.size-1)
         {
 
             var i: Int = n
@@ -105,7 +161,7 @@ class Wielomian (val wsp: MutableList<Double>) {
             do {
                 list.add(i, wiel2.wsp[i])
                 i++
-            } while(i<wiel2.wsp.size)
+            } while(i<=wiel2.wsp.size-1)
 
         }
         val wiel3 = Wielomian(list)
@@ -206,20 +262,29 @@ fun main()
     var wiel3 = wiel+wiel2
     println("Dwa wielomiany: ")
     print("W1:")
-    wiel.Wypisz()
+    println(wiel.ToString())
     print("W2:")
-    wiel2.Wypisz()
+    println(wiel2.ToString())
     println("Suma wielomianów: ")
-    wiel3.Wypisz()
+    println(wiel3.ToString())
+    wiel3 = wiel2+wiel
+    println("Suma wielomianów: ")
+    println(wiel3.ToString())
     println("Różnica wielomianów (W1 - W2): ")
     wiel3 = wiel-wiel2
-    wiel3.Wypisz()
+    println(wiel3.ToString())
     println("Różnica wielomianów (W2 - W1): ")
     wiel3 = wiel2-wiel
-    wiel3.Wypisz()
+    println(wiel3.ToString())
     println("Iloczyn wielomianów: ")
     wiel3 = wiel*wiel2
-    wiel3.Wypisz()
-
+    println(wiel3.ToString())
+    val list3 = mutableListOf<Double>(2.0)
+    var wiel4 = Wielomian(list3)
+    println("Wielomian zerowego stopnia: ")
+    println(wiel4.ToString())
+    val list1 = mutableListOf<Double>(1.0,0.0,-2.0,0.0)
+    val wiel1 = Wielomian(list1)
+    println(wiel1.ToString())
 
 }

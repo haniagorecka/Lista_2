@@ -1,13 +1,13 @@
 package com.example.lista2
 
 import org.junit.jupiter.api.Assertions.*
-import org.junit.jupiter.api.Test
 import org.junit.Assert.*
+import org.junit.Test
 
 
 class ProteinSequenceTest {
 
-    @org.junit.Test
+    @Test
     fun ProteinSequenceCreate(){
         val list = mutableListOf<String>("Gly", "Met")
         val Prot = ProteinSequence(list)
@@ -19,7 +19,7 @@ class ProteinSequenceTest {
         assertTrue("ProteinSequence GM"==id, {"Błędna wartość identifier"})
 
     }
-    @org.junit.Test
+    @Test
     fun mutate() {
         val list = mutableListOf<String>("Gly", "Met")
         val Prot = ProteinSequence(list)
@@ -31,7 +31,7 @@ class ProteinSequenceTest {
         assertTrue(mutableListOf<String>("Ala", "Leu") ==str, {"Błąd w mutacji"})
     }
 
-    @org.junit.Test
+    @Test
     fun findMotif() {
         val list = mutableListOf<String>("Gly", "Met", "Met", "Ser", "Gly" )
         val Prot = ProteinSequence(list)
@@ -39,7 +39,7 @@ class ProteinSequenceTest {
         assertEquals(3, Prot.findMotif(mutableListOf("Ser", "Gly")), {"Błąd w szukaniu motywu"})
     }
 
-    @org.junit.Test
+    @Test
     fun testToString() {
         val list = mutableListOf<String>("Gly", "Met")
         val Prot = ProteinSequence(list)
